@@ -6,20 +6,25 @@ services:
        - "8086:8086"
        - "8083:8083"
       environment:
-       - HTTP_PROXY=http://10.97.113.4:3128
-       - HTTPS_PROXY=http://10.97.113.4:3128
+       - HTTP_PROXY
+       - HTTPS_PROXY
        - INFLUXDB_USER=root
        - INFLUXDB_PASS=root
-       - INFLUXDB_NAME=stats
+       - INFLUXDB_NAME=environment
+       - PRE_CREATE_DB="environment"
     grafana:
       image: grafana/grafana
-      environment:    
+      environment:
 #       - GF_INSTALL_PLUGINS=grafana-clock-panel
-       - HTTP_PROXY=http://10.97.113.4:3128
-       - HTTPS_PROXY=http://10.97.113.4:3128
+       - HTTP_PROXY
+       - HTTPS_PROXY
        - NO_PROXY="influxdb"
+       - INFLUXDB_USER=root
+       - INFLUXDB_PASS=J*E2<PTJcNc4
+       - INFLUXDB_NAME=environment
       links:
        - influxdb
       ports:
        - "3000:3000"
-
+      depends_on:
+       - influxdb
